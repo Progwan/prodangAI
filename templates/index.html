@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    h1 {
+      background-color: #fff0f0;
+      margin: 0;
+    }
+
+    div {
+      padding: 10px;
+    }
+
+    span {
+      border-radius: 10px;
+      background-color: #fff0f0;
+      padding: 8px;
+    }
+
+    .bot {
+      text-align: left;
+    }
+
+    .user {
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>{{ title }} と会話しよう！</h1>
+  <div id="chat"> </div>
+  <div class="user">
+    <input id="txt" size="40">
+    <button onclick="say()">発言</button>
+  </div>
+  ※このサイトは学習をするので変な文章は入れないでください。
+  <script>
+    "use strict";
+
+    var url = "/";
+    function esc(s) {
+      console.log(s);
+      return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
+    }
+    function say() {
+      $.ajax({
+        data: JSON.stringify({
+          'm': "say",
+          'txt': $("#txt").val()
+        }),
+        type: 'POST',
+        url: '/postText',
+        contentType: 'application/json'
+      })
+        .done(function (data) {
+          var html = "<div class='user'><span>" + esc($("#txt").val()) + "</span>：あなた</div><div class='bot'>prodang：<span>" + esc(JSON.parse(data.ResultSet).result) + "</span></div>";
+          $("#chat").html($("#chat").html() + html);
+          $("#txt").val('').focus();
+        });
+    }
+  </script>
+</body>
+
+</html>
+

@@ -21,5 +21,5 @@ def lower_conversion():
     return jsonify(return_data = {"result":lower_text})
   
 if __name__ == '__main__':
-    app.debug = 
+    app.debug = True
     app.run()

@@ -1,7 +1,5 @@
 
 Flask==1.1.1
-Flask-SQLAlchemy==2.4.1
 Janome==0.3.10
 Jinja2==2.10.3
-Markdown==3.1
 json==2.0.9

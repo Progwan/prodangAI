@@ -9,6 +9,8 @@
   <style>
     body {
       margin: 0;
+      font-family: 'Avenir', 'Corbel', 'Osaka' 'MS Pゴシック';
+      color: #111;
     }
     h1 {
       background-color: #fff0f0;
@@ -19,7 +21,7 @@
       padding: 10px;
     }
 
-    span {
+    #span {
       border-radius: 10px;
       background-color: #fff0f0;
       padding: 8px;
@@ -32,6 +34,9 @@
     .user {
       text-align: right;
     }
+    .dang {
+        color: #f00;
+    }
   </style>
 </head>
 
@@ -39,8 +44,9 @@
   <h1>{{ title }} と会話しよう！</h1>
   <div id="chat"> </div>
   <div class="user">
+    <span id="mojisuu">0/0</span>
     <input id="txt" size="40">
-    <button onclick="say()">発言</button>
+    <button id="but" onclick="say()">発言(40文字以内)</button>
   </div>
   ※このサイトは学習をするので変な文章は入れないでください。
   <script>
@@ -51,6 +57,17 @@
       console.log(s);
       return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
     }
+    $("#txt").keyup(function(e){
+            var l = $("#txt").val().length;
+            $('#mojisuu').text(String(l) + "/40")
+            if(l>0 && l<41){
+                  $('#but').prop('disabled', false);
+                  $('#mojisuu').removeClass('dang');
+            } else {
+                  $('#but').prop('disabled', true);
+                  $('#mojisuu').addClass('dang');
+            }
+    });
     function say() {
       $.ajax({
         data: JSON.stringify({
@@ -62,7 +79,7 @@
         contentType: 'application/json'
       })
         .done(function (data) {
-          var html = "<div class='user'><span>" + esc($("#txt").val()) + "</span>：あなた</div><div class='bot'>prodang：<span>" + esc(JSON.parse(data.ResultSet).result) + "</span></div>";
+          var html = "<div class='user'><span id='span'>" + esc($("#txt").val()) + "</span>：あなた</div><div class='bot'>prodang：<span id='span'>" + esc(JSON.parse(data.ResultSet).result) + "</span></div>";
           $("#chat").html($("#chat").html() + html);
           $("#txt").val('').focus();
         });

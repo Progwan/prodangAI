@@ -2,7 +2,7 @@
 from janome.tokenizer import Tokenizer
 import os, re, json, random, sys
 
-dict_file = "../data.json"
+dict_file = "data.json"
 dic = {}
 tokenizer = Tokenizer()
 

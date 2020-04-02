@@ -46,7 +46,7 @@
   <div class="user">
     <span id="mojisuu">0/0</span>
     <input id="txt" size="40">
-    <button id="but" onclick="say()">発言(40文字以内)</button>
+    <button id="but">発言(40文字以内)</button>
   </div>
   ※このサイトは学習をするので変な文章は入れないでください。
   <script>
@@ -59,7 +59,7 @@
     }
     $("#txt").keyup(function(e){
             var l = $("#txt").val().length;
-            $('#mojisuu').text(String(l) + "/40")
+            $('#mojisuu').text(String(l) + "/40");
             if(l>-1 && l<41){
                   $('#but').prop('disabled', false);
                   $('#mojisuu').removeClass('dang');
@@ -68,7 +68,11 @@
                   $('#mojisuu').addClass('dang');
             }
     });
-    function say() {
+    $('#but').click( function (){
+      var l = $("#txt").val().length;
+      if (l < 0 || l > 40){
+        return;
+      }
       $.ajax({
         data: JSON.stringify({
           'm': "say",
@@ -83,7 +87,7 @@
           $("#chat").html($("#chat").html() + html);
           $("#txt").val('').focus();
         });
-    }
+    });
   </script>
 </body>
 

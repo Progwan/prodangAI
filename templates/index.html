@@ -72,7 +72,7 @@
     });
     $('#but').click( function (){
       var l = $("#txt").val().length;
-      if (l <  || l > 40){
+      if (l < 0 || l > 40){
         return;
       }
       $.ajax({
@@ -88,6 +88,9 @@
           var html = "<div class='user'><span id='span'>" + esc($("#txt").val()) + "</span>：あなた</div><div class='bot'>prodang：<span id='span'>" + esc(JSON.parse(data.ResultSet).result) + "</span></div>";
           $("#chat").html($("#chat").html() + html);
           $("#txt").val('').focus();
+          $('#but').prop('disabled', false);          
+          $('#mojisuu').removeClass('dang');
+          $("#mojisuu").text("0/40");
         });
     });
   </script>
